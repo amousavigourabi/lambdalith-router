@@ -1,7 +1,7 @@
 {
   "name": "lambdalith-router",
   "version": "1.0.0",
-  "description": "A minimal platform-agnostic routing library, made for use with Lambdaliths",
+  "description": "A minimal, platform-agnostic routing library, made for use with Lambdaliths",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
