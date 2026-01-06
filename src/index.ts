@@ -62,7 +62,7 @@ export class Router<Event, Result> {
     this.root = new RNode<Event, Result>();
   }
 
-  route(path: string, method: Method, event: Event) {
+  public route(path: string, method: Method, event: Event): Result {
     const start = path[0] === '/' ? 1 : 0;
     const end = path[path.length - 1] === '/' ? -1 : path.length;
     const segments = path.slice(start, end).split('/');
@@ -70,11 +70,11 @@ export class Router<Event, Result> {
     return this.root.route(segments, 0, {}, event, { error: this.errorHandler });
   }
 
-  buildApi() {
+  buildApi(): RNode<Event, Result> {
     return this.root;
   }
 }
 
-export function registerRouter<Event, Result>(err: ErrorHandler<Event, Result>) {
+export function registerRouter<Event, Result>(err: ErrorHandler<Event, Result>): Router<Event, Result> {
   return new Router<Event, Result>(err);
 }
