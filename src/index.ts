@@ -63,7 +63,9 @@ export class Router<Event, Result> {
   }
 
   route(path: string, method: Method, event: Event) {
-    const segments = path.split('/');
+    const start = path[0] === '/' ? 1 : 0;
+    const end = path[path.length - 1] === '/' ? -1 : path.length;
+    const segments = path.slice(start, end).split('/');
     segments.push(method);
     return this.root.route(segments, 0, {}, event, { error: this.errorHandler });
   }
