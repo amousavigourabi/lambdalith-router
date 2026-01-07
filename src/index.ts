@@ -57,8 +57,8 @@ export class Router<Event, Result> {
   private readonly errorHandler: ErrorHandler<Event, Result>;
   private readonly root: RNode<Event, Result>;
 
-  constructor(err: ErrorHandler<Event, Result>) {
-    this.errorHandler = err;
+  constructor(notFound: ErrorHandler<Event, Result>) {
+    this.errorHandler = notFound;
     this.root = new RNode<Event, Result>();
   }
 
