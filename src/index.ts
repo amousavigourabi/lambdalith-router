@@ -22,7 +22,7 @@ export class RNode<Event, Result> {
     this.staticChildren = {};
   }
 
-  on(path: NoSlash): RNode<Event, Result> {
+  public on(path: NoSlash): RNode<Event, Result> {
     const node = new RNode<Event, Result>();
     if (path[0] === ':') {
       const param = path.slice(1);
@@ -36,19 +36,19 @@ export class RNode<Event, Result> {
     return node;
   }
 
-  method(method: Method, handler: Handler<Event, Result>): void {
+  public method(method: Method, handler: Handler<Event, Result>): void {
     this.handlerByMethod[method] = handler;
   }
 
-  route(path: Array<NoSlash>, position: number, params: PathParams, event: Event, ctx: Context<Event, Result>): Result {
+  _route(path: Array<NoSlash>, position: number, params: PathParams, event: Event, ctx: Context<Event, Result>): Result {
     const segment = path[position];
     if (path.length === position - 1) {
       return this.handlerByMethod[segment](params, event) ?? ctx.error(event);
     } else if (this.paramChild) {
       params[this.paramChild.param] = segment;
-      return this.paramChild.node.route(path, position + 1, params, event, ctx);
+      return this.paramChild.node._route(path, position + 1, params, event, ctx);
     } else {
-      return this.staticChildren[segment]?.route(path, position + 1, params, event, ctx) ?? ctx.error(event);
+      return this.staticChildren[segment]?._route(path, position + 1, params, event, ctx) ?? ctx.error(event);
     }
   }
 }
@@ -67,10 +67,10 @@ export class Router<Event, Result> {
     const end = path[path.length - 1] === '/' ? -1 : path.length;
     const segments = path.slice(start, end).split('/');
     segments.push(method);
-    return this.root.route(segments, 0, {}, event, { error: this.errorHandler });
+    return this.root._route(segments, 0, {}, event, { error: this.errorHandler });
   }
 
-  buildApi(): RNode<Event, Result> {
+  public buildApi(): RNode<Event, Result> {
     return this.root;
   }
 }
