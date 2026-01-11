@@ -10,11 +10,17 @@
   ],
   "scripts": {
     "build": "tsc && npm run bundle",
-    "bundle": "esbuild src/index.ts --bundle --minify --sourcemap --outfile=dist/index.esm.js --format=esm && esbuild src/index.ts --bundle --minify --sourcemap --outfile=dist/index.cjs.js --format=cjs"
+    "bundle": "esbuild src/index.ts --bundle --minify --sourcemap --outfile=dist/index.esm.js --format=esm && esbuild src/index.ts --bundle --minify --sourcemap --outfile=dist/index.cjs.js --format=cjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "esbuild": "^0.27.2",
-    "typescript": "^5.9.3"
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
   },
   "license": "MIT"
 }

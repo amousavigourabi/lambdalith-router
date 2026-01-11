@@ -47,9 +47,8 @@ export class RNode<Event, Result> {
     } else if (this.paramChild) {
       params[this.paramChild.param] = segment;
       return this.paramChild.node._route(path, position + 1, params, event, ctx);
-    } else {
-      return this.staticChildren[segment]?._route(path, position + 1, params, event, ctx) ?? ctx.error(event);
-    }
+    } 
+    return this.staticChildren[segment]?._route(path, position + 1, params, event, ctx) ?? ctx.error(event);
   }
 }
 
